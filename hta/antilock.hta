@@ -1,0 +1,40 @@
+<html>
+<head>
+<hta:application id="antilock">
+<script language="vbscript">
+dim started
+sub start1()
+	started=true
+	msgbox "started"
+	do while started
+		Sleeep
+		ClickIns
+	loop
+	
+end sub
+
+Sub ClickIns()
+	Set WshShell = CreateObject("Wscript.Shell")
+	WshShell.SendKeys "{INSERT}"
+	Set WshShell = nothing
+End Sub
+
+sub stop1()
+	started=false
+	msgbox "stoped"
+end sub
+
+sub Sleeep()
+	strCommand = "%ComSpec% /C %SystemRoot%\system32\ping.exe 127.0.0.1 -n 5"
+	Set WshShell = CreateObject("Wscript.Shell")
+	WshShell.Run strCommand ,  0 , true
+	Set WshShell = nothing
+End sub
+
+</script>
+</head>
+<body>
+<button id="start" onclick="start1()" >Start</button>
+<button id="stop" onclick="stop1()">Stop</button>
+</body>
+</html>

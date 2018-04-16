@@ -1,0 +1,46 @@
+<html><head><title>Runner</title>
+<hta:application id="rest_runner" applicationname="Runner">
+</head>
+<script language="VBScript">
+    	Sub TestSub
+	Document.getelementbyid("results").innerhtml = "Done from VBS"
+
+	end sub
+</script>
+<script language="javascript">
+
+	function redo(){
+	window.resizeTo(640, 480);
+	document.write("<h1>Something from Javascript</h1>");
+	}
+
+	function searchRobots(){
+	var xmlhttp = new XMLHttpRequest();
+
+
+//	xmlhttp.onreadystatechange = function() {
+//    	if (this.readyState == 4 && this.status == 200) {
+//        	var obj = this.responseText;
+//		alert(obj);
+//    		} ;
+//	}
+	xmlhttp.open("GET", "http://jsonapi-robot-wars.herokuapp.com/robotModels", false);
+	xmlhttp.responseType = 'text';
+	xmlhttp.send();
+
+	document.getElementById("results").innerHTML  = xmlhttp.responseText;
+	var va = document.getElementById("results").innerHTML
+	if(va.includes("megatron"))
+		alert("Megatron was found");
+	else
+		alert("was not found");
+
+	document.write(xmlhttp.responseText);
+
+	}
+</script>
+<body><center><h1>Rest runner</h1></center><hr><div id="results">Results</div>
+<input type="button" value="VBScript" onClick="TestSub"></input>
+<input type="button" value="JavaScript" onClick="redo()"></input>
+<input type="button" value="JavaScript run" onClick="searchRobots()"></input>
+</body></html>

@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>Runner</title>
+<hta:application id="rest_runner"
+  applicationname="Runner"
+  version="1.0"
+  border="thin"
+  borderstyle="raised"
+  caption="yes"
+  contextmenu="yes"
+  innerborder="yes"
+  maximizebutton="yes"
+  minimizebutton="yes"
+  selection="yes"
+  scroll="yes"
+  scrollflat="yes"
+  showintaskbar="yes"
+  SysMenu="yes"
+  SINGLEINSTANCE="yes"
+>
+
+
+</head>
+
+<SCRIPT LANGUAGE="VBScript">
+
+    	Sub TestSub
+        Set WshShell = CreateObject("WScript.Shell")
+	Document.getelementbyid("results").innerhtml = "Running..."
+        return = WshShell.Run("powershell.exe -ExecutionPolicy Unrestricted -File testsuite.ps1", 0, true)
+	Document.getelementbyid("results").innerhtml = "Done"
+	showresults
+	end sub
+
+	sub showresults
+        Set fso  = CreateObject("Scripting.FileSystemObject")
+        Set file = fso.OpenTextFile("results.html", 1, false, true)
+        text = file.ReadAll
+
+	Document.getelementbyid("results").innerhtml = text
+
+        file.Close
+
+	document.getElementById("resultsframe").contentWindow.location.reload()
+
+    End Sub
+
+  Sub ExitProgram
+    window.close()
+  End Sub
+
+</SCRIPT>
+
+<body>
+<center><h1>Rest runner</h1></center>
+<hr>
+<div id="results">Results</div>
+<iframe id="resultsframe" src="results.html" width=200 height=400 frameborder=0 ></iframe>
+<input type="button" value="Run" onClick="TestSub"></input>
+<input type="button" value="Show results" onClick="showresults"></input>
+<br>
+
+<BR>
+
+<input id=closebutton type="button" value="Close" onClick="ExitProgram">
+
+</body>
+
+</html>
